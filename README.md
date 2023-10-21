@@ -1,4 +1,4 @@
-# Onestop-Digitilization Project Setup Guide (Windows)
+# Onestop-Digitilization Setup Guide (Windows)
 
 Welcome to Python project! This guide will walk you through the process of setting up the project on a Windows machine.
 
@@ -57,9 +57,20 @@ Welcome to Python project! This guide will walk you through the process of setti
 
 1. In the Root directory run the following command:
    ```bash
-   python3 DevHireExtended/manage.py runserver
+   python3 tobeupdated/manage.py migrate
+   python3 tobeupdated/manage.py runserver
    ```
    OR
    ```
-   py DevHireExtended/manage.py runserver
+   py tobeupdated/manage.py migrate
+   py tobeupdated/manage.py runserver
    ```
+2. Visit http://localhost:8000/ to access the platform.
+
+   
+##Technologies Used
+
+1. Django: As the primary web framework for building the platform.
+2. Python: To write backend logic and scripts.
+3. HTML/CSS/JavaScript: For front-end development and user interface.
+4. SQL: As the database system to store user data and information.
