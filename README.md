@@ -68,7 +68,7 @@ Welcome to Python project! This guide will walk you through the process of setti
 2. Visit http://localhost:8000/ to access the platform.
 
    
-##Technologies Used
+## Technologies Used
 
 1. Django: As the primary web framework for building the platform.
 2. Python: To write backend logic and scripts.
