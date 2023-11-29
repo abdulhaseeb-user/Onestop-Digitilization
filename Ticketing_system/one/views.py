@@ -3,6 +3,9 @@ from .forms import StudentAdvisingForm
 from .models import StudentAdvising
 import random
 
+def index(request):
+    return render(request, 'one/index.html')
+
 def advising_view(request):
     if request.method == 'POST':
         form = StudentAdvisingForm(request.POST)
