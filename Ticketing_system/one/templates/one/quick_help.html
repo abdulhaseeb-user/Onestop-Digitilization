@@ -17,17 +17,15 @@
     {% if student_id_search %}
         <h2>Details for Student ID: {{ student_id_search }}</h2>
         {% for student_advising in student_advisings %}
-            {% if student_advising.student_id == student_id_search %}
-                <div>
-                    <p><strong>Ticket ID:</strong><a href="{% url 'ticket_details' ticket_id=student_advising.ticket_id %}"> {{ student_advising.ticket_id }}</a></p>
-                    <p><strong>Status:</strong> {{ student_advising.status }}</p>
+            <div>
+                <p><strong>Ticket ID:</strong><a href="{% url 'ticket_details' ticket_id=student_advising.ticket_id %}"> {{ student_advising.ticket_id }}</a></p>
+                <p><strong>Status:</strong> {{ student_advising.status }}</p>
 
-                    {% if student_advising.status == 'Closed' %}
-                        <p><strong>Resolution:</strong> {{ student_advising.resolution }}</p>
-                    {% endif %}
-                </div>
-                <hr>
-            {% endif %}
+                {% if student_advising.status == 'Closed' %}
+                    <p><strong>Resolution:</strong> {{ student_advising.resolution }}</p>
+                {% endif %}
+            </div>
+            <hr>
         {% endfor %}
     {% else %}
         <p>No Student ID entered. Please use the search form above.</p>
