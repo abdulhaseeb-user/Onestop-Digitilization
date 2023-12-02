@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Students One Stop</title>
+    <style>
+        /* Add your custom styles here */
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="https://www.nu.edu.pk/images/logo.png" alt="Fast Nuces University Logo" align="right">
+        <h1>One Stop</h1>
+    </div>
+    <div class="content">
+        <h2>Welcome to Students One Stop</h2>
+        <p>Here is the information we have about you:</p>
+        <ul>
+            <li>Name: {{ name }}</li>
+            <li>Email: {{ email }}</li>
+            <li>Student ID: {{ student_id }}</li>
+            <li>Program: {{ program }}</li>
+        </ul>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit">Log Out</button>
+        </form>
+    </div>
+</body>
+</html>
