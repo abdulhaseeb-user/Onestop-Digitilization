@@ -40,7 +40,7 @@ class Faculty(models.Model):
     Email = models.EmailField(unique=True)
     Name = models.CharField(max_length=255)
     Department = models.CharField(max_length=4, choices=Department.choices)
-    subjects = models.ManyToManyField(Subject)  # Use ManyToManyField for multiple subjects
+    sub = models.ForeignKey(Subject, on_delete=models.CASCADE, null=True, blank=True)  # Use ManyToManyField for multiple subjects
     Role = models.CharField(max_length=50)
 
     def __str__(self):
@@ -131,7 +131,7 @@ def assign_manager(sender, instance, created, **kwargs):
             instance.manager = managers.first()
             instance.save()
 
-# both implementation
+# manager implementation
 
 
 class Notification(models.Model):
