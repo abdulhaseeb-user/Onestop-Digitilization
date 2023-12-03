@@ -1,30 +1,277 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Students One Stop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <style>
-        /* Add your custom styles here */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        body.dark-mode {
+            background-color: grey; /* Dark mode background color */
+            color: #fff; /* Dark mode text color */
+        }
+
+        .sidebar {
+            background-color: #333;
+            padding: 20px;
+            color: white;
+            text-align: center;
+            height: 100vh;
+            width: 200px;
+            position: fixed;
+            z-index: 3; /* Ensure sidebar is above other content */
+        }
+        body.dark-mode .sidebar {
+            background-color: black;
+            padding: 20px;
+            color: white;
+            text-align: center;
+            height: 100vh;
+            width: 200px;
+            position: fixed;
+            z-index: 3; /* Ensure sidebar is above other content */
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px 0;
+        }
+
+        .sidebar i {
+            margin-right: 5px;
+        }
+
+        .content-container {
+            margin-left: 220px; /* Adjusted for sidebar width */
+            flex-grow: 1; /* Allow content to grow and fill remaining space */
+        }
+
+        .header {
+            background-color: #fff;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            z-index: 1; /* Ensure header is above other content */
+        }
+
+        body.dark-mode .header {
+            background-color: #333;
+            color: black;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            z-index: 1; /* Ensure header is above other content */
+        }
+
+        .header img {
+            max-width: 150px;
+            display: block;
+            margin: 0 auto; /* Center the image */
+        }
+
+        h1, h2 {
+            color: #007bff;
+            margin: 0;
+        }
+        body.dark-mode h2 {
+            color: #fff; /* Text color in dark mode */
+        }
+
+        .logout-btn {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .logout-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .content {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode .content {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: black;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .sub-heading {
+            font-size: 18px;
+            color: #555;
+            margin-left: 10px;
+            opacity: 0; /* Initially hidden */
+            animation: fadeIn 10s forwards; /* Animation duration and fill-mode */
+        }
+        body.dark-mode .sub-heading {
+            font-size: 18px;
+            color: #fff;
+            margin-left: 10px;
+            opacity: 0; /* Initially hidden */
+            animation: fadeIn 10s forwards; /* Animation duration and fill-mode */
+        }
+
+        .animated-word {
+            font-size: 18px;
+            display: inline-block;
+            animation: bounce 2s infinite;
+            background-image: linear-gradient(to right, #007bff, #0056b3);
+            color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;
+        }
+
+        body.dark-mode .animated-word {
+            font-size: 18px;
+            display: inline-block;
+            animation: fadeIn 2s infinite;
+            background-image: linear-gradient(to right, #ffffff, #f0f0f0);
+            color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-5px);
+            }
+            60% {
+                transform: translateY(-3px);
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
     </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var options = {
+                strings: ["Aheed, Ashad, Haseeb Present"],
+                typeSpeed: 100,  // Adjust typing speed as needed
+                showCursor: true,  // Set to false to hide cursor
+                cursorChar: '',   // Customize cursor character
+                onComplete: function () {
+                    // Destroy the Typed instance
+                    function delayedFunction() {
+                        typed.destroy();
+                    }
+
+                    // Set a delay of 2000 milliseconds (1 second)
+                    setTimeout(delayedFunction, 2000);
+                }
+            };
+
+            var typed = new Typed('#typed-output', options);
+        });
+        function toggleDarkMode() {
+            const body = document.body;
+            const darkMode = body.classList.contains("dark-mode");
+
+            // Toggle dark mode class
+            body.classList.toggle("dark-mode", !darkMode);
+
+            // Store the user's dark mode preference in localStorage
+            localStorage.setItem("darkMode", !darkMode ? "enabled" : "disabled");
+
+            setLogoImage(!darkMode);
+        }
+        function setLogoImage(isDarkMode) {
+            const logoImg = document.getElementById("logo-image");
+            console.log(logoImg);
+            logoImg.src = isDarkMode
+                ? "https://drive.google.com/uc?id=1DBXfLGIhCX7mTP782TS0u6OgAgx5jLYY" // dark mode logo URL
+                : "https://drive.google.com/uc?id=1BKk00uxKPeyxjYbvwz9OK2LaaAAvPRes"; // regular logo URL
+        }
+        window.onload = function() {
+            // Check if dark mode preference is stored in localStorage
+            const darkMode = localStorage.getItem("darkMode") === "enabled";
+
+            // Toggle dark mode based on preference
+            document.body.classList.toggle("dark-mode", darkMode);
+
+            setLogoImage(darkMode);
+        }
+    </script>
 </head>
 <body>
-    <div class="header">
-        <img src="https://www.nu.edu.pk/images/logo.png" alt="Fast Nuces University Logo" align="right">
-        <h1>One Stop</h1>
+    <div class="sidebar">
+        <a href="#"><i class="fas fa-pen"></i>Create A Query</a>
+        <a href="#"><i class="fas fa-eye"></i>Query Status</a>
+        <a href="#"><i class="fas fa-table"></i>Time Table</a>
+        <a href="#"><i class="fas fa-book"></i>FAQs</a>
     </div>
-    <div class="content">
-        <h2>Welcome to Students One Stop</h2>
-        <p>Here is the information we have about you:</p>
-        <ul>
-            <li>Name: {{ name }}</li>
-            <li>Email: {{ email }}</li>
-            <li>Student ID: {{ student_id }}</li>
-            <li>Program: {{ program }}</li>
-        </ul>
-        <form method="post" action="{% url 'logout' %}">
-            {% csrf_token %}
-            <button type="submit">Log Out</button>
-        </form>
+    <div class="content-container">
+        <div class="header">
+            <img id="logo-image" src="https://drive.google.com/uc?id=1BKk00uxKPeyxjYbvwz9OK2LaaAAvPRes" alt="OneStop Logo">
+            <h1 class="sub-heading">
+                <span id="typed-output"></span>
+            </h1>
+            <h1 class="sub-heading"> <span class="animated-word">Digitalized</span> OneStop</h1>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button class="logout-btn" type="submit">Log Out</button>
+            </form>
+        </div>
+        <div class="content">
+            <h2>Student Dashboard</h2>
+            <p>{{username}}'s Information:</p>
+            <ul>
+                {% if name %}<li>Name: {{ name }}</li>{% endif %}
+                <li>Email: {{ email }}</li>
+                {% if program %}<li>Your program: {{ program }}</li>{% endif %}
+                {% if semester %}<li>Your semester: {{ semester }}</li>{% endif %}
+                {% if cgpa %}<li>Your CGPA: {{ cgpa }}</li>{% endif %}
+                {% if first_name %}<li>Your first name: {{ first_name }}</li>{% endif %}
+                {% if last_name %}<li>Your last name: {{ last_name }}</li>{% endif %}
+                {% if batch %}<li>Your batch: {{ batch }}</li>{% endif %}
+                {% if student_id %}<li>Your student ID: {{ student_id }}</li>{% endif %}
+                {% if city %}<li>Your City: {{ city }}</li>{% endif %}
+            </ul>
+        </div>
     </div>
+    <div style="position: fixed; bottom: 20px; right: 20px; cursor: pointer; font-size: 18px;" onclick="toggleDarkMode()">🌙</div>
+
 </body>
 </html>
