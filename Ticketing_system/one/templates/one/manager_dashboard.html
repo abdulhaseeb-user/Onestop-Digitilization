@@ -1,42 +1,279 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Manager Dashboard</title>
-    <style>
-      /* Add some basic styling for the buttons */
-      .dashboard-buttons {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        margin-top: 20px;
-      }
-      
-      .dashboard-buttons a {
-        display: block;
-        padding: 10px;
-        text-align: center;
-        background-color: #4caf50; /* Green background */
-        color: white; /* White text */
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        text-decoration: none;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Manager Dashboard</h1>
+<html lang="en">
 
-    <div class="dashboard-buttons">
-      <a href="{% url 'add_subject' %}">Add Subject</a>
-      <a href="{% url 'add_faculty' %}">Add Faculty</a>
-      <a href="{% url 'add_section' %}">Add Section</a>
-      <a href="{% url 'add_student' %}">Add Student</a>
-      <a href="{% url 'add_department' %}">Add Departments</a>
-      <a href="{% url 'add_services' %}">Add Service</a>
-      <a href="{% url 'create_timetable' %}">Create Timetable</a>
-      <a href="{% url 'view_notifications' %}">View Notifications</a>
-      <a href="{% url 'view_tickets' %}">View Tickets</a>
+<head>
+    <meta charset="UTF-8">
+    <title>Students One Stop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        body.dark-mode {
+            background-color: grey; /* Dark mode background color */
+            color: #fff; /* Dark mode text color */
+        }
+
+        .sidebar {
+            background-color: #333;
+            padding: 20px;
+            color: white;
+            text-align: center;
+            height: 100vh;
+            width: 200px;
+            position: fixed;
+            z-index: 3;
+        }
+
+        body.dark-mode .sidebar {
+            background-color: black;
+            padding: 20px;
+            color: white;
+            text-align: center;
+            height: 100vh;
+            width: 200px;
+            position: fixed;
+            z-index: 3;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px 0;
+        }
+
+        .sidebar i {
+            margin-right: 5px;
+        }
+
+        .content-container {
+            margin-left: 220px;
+            flex-grow: 1;
+        }
+
+        .header {
+            background-color: #fff;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        body.dark-mode .header {
+            background-color: #333;
+            color: black;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header img {
+            max-width: 150px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        h1, h2 {
+            color: #007bff;
+            margin: 0;
+        }
+
+        body.dark-mode h2 {
+            color: #fff;
+        }
+
+        .logout-btn {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .logout-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .content {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode .content {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: black;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .sub-heading {
+            font-size: 18px;
+            color: #555;
+            margin-left: 10px;
+            opacity: 0;
+            animation: fadeIn 10s forwards;
+        }
+
+        body.dark-mode .sub-heading {
+            font-size: 18px;
+            color: #fff;
+            margin-left: 10px;
+            opacity: 0;
+            animation: fadeIn 10s forwards;
+        }
+
+        .animated-word {
+            font-size: 18px;
+            display: inline-block;
+            animation: bounce 2s infinite;
+            background-image: linear-gradient(to right, #007bff, #0056b3);
+            color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;
+        }
+
+        body.dark-mode .animated-word {
+            font-size: 18px;
+            display: inline-block;
+            animation: fadeIn 2s infinite;
+            background-image: linear-gradient(to right, #ffffff, #f0f0f0);
+            color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-5px);
+            }
+
+            60% {
+                transform: translateY(-3px);
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var options = {
+                strings: ["Aheed, Ashad, Haseeb Present"],
+                typeSpeed: 100,
+                showCursor: true,
+                cursorChar: '',
+                onComplete: function () {
+                    function delayedFunction() {
+                        typed.destroy();
+                    }
+
+                    setTimeout(delayedFunction, 2000);
+                }
+            };
+
+            var typed = new Typed('#typed-output', options);
+        });
+
+        function toggleDarkMode() {
+            const body = document.body;
+            const darkMode = body.classList.contains("dark-mode");
+
+            body.classList.toggle("dark-mode", !darkMode);
+
+            localStorage.setItem("darkMode", !darkMode ? "enabled" : "disabled");
+
+            setLogoImage(!darkMode);
+        }
+
+        function setLogoImage(isDarkMode) {
+            const logoImg = document.getElementById("logo-image");
+            logoImg.src = isDarkMode ?
+                "https://drive.google.com/uc?id=1DBXfLGIhCX7mTP782TS0u6OgAgx5jLYY" :
+                "https://drive.google.com/uc?id=1BKk00uxKPeyxjYbvwz9OK2LaaAAvPRes";
+        }
+
+        window.onload = function () {
+            const darkMode = localStorage.getItem("darkMode") === "enabled";
+
+            document.body.classList.toggle("dark-mode", darkMode);
+
+            setLogoImage(darkMode);
+        }
+    </script>
+</head>
+
+<body>
+    <div class="sidebar">
+        <a href="#"><i class="fas fa-plus"></i>Add Subjects</a>
+        <a href="#"><i class="fas fa-eye"></i>View Queries</a>
+        <a href="#"><i class="fas fa-calendar-alt"></i>Create Timetable</a>
+        <a href="#"><i class="fas fa-user-plus"></i>Add Faculty</a>
+        <a href="#"><i class="fas fa-user-graduate"></i>Add Students</a>
+        <a href="#"><i class="fas fa-th-list"></i>Add Sections</a>
+        <a href="#"><i class="fas fa-bell"></i>View Notifications</a>
+    
     </div>
-  </body>
+    <div class="content-container">
+        <div class="header">
+            <img id="logo-image" src="https://drive.google.com/uc?id=1BKk00uxKPeyxjYbvwz9OK2LaaAAvPRes" alt="OneStop Logo">
+            <h1 class="sub-heading">
+                <span id="typed-output"></span>
+            </h1>
+            <h1 class="sub-heading"> <span class="animated-word">Digitalized</span> OneStop</h1>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button class="logout-btn" type="submit">Log Out</button>
+            </form>
+        </div>
+        <div class="content">
+            <h2>Manager Dashboard</h2>
+            <p>Your Information:</p>
+            <ul>
+                {% if name %}<li>Name: {{ name }}</li>{% endif %}
+                <li>Email: {{ email }}</li>
+                {% if manager_id %}<li>Manager ID: {{ manager_id }}</li>{% endif %}
+            </ul>
+        </div>
+    </div>
+    <div style="position: fixed; bottom: 20px; right: 20px; cursor: pointer; font-size: 18px;"
+        onclick="toggleDarkMode()">🌙</div>
+
+</body>
+
 </html>
