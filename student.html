@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Students One Stop</title>
@@ -186,61 +187,51 @@
         }
     </style>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var options = {
-                strings: ["Aheed, Ashad, Haseeb Present"],
-                typeSpeed: 100,  // Adjust typing speed as needed
-                showCursor: true,  // Set to false to hide cursor
-                cursorChar: '',   // Customize cursor character
-                onComplete: function () {
-                    // Destroy the Typed instance
-                    function delayedFunction() {
-                        typed.destroy();
-                    }
+        // document.addEventListener('DOMContentLoaded', function () {
+        //     var options = {
+        //         strings: ["Aheed, Ashad, Haseeb Present"],
+        //         typeSpeed: 100,
+        //         showCursor: true,
+        //         cursorChar: '',
+        //         onComplete: function () {
+        //             function delayedFunction() {
+        //                 typed.destroy();
+        //             }
+        //             setTimeout(delayedFunction, 2000);
+        //         }
+        //     };
+        //     var typed = new Typed('#typed-output', options);
+        // });
 
-                    // Set a delay of 2000 milliseconds (1 second)
-                    setTimeout(delayedFunction, 2000);
-                }
-            };
-
-            var typed = new Typed('#typed-output', options);
-        });
         function toggleDarkMode() {
             const body = document.body;
             const darkMode = body.classList.contains("dark-mode");
-
-            // Toggle dark mode class
             body.classList.toggle("dark-mode", !darkMode);
-
-            // Store the user's dark mode preference in localStorage
             localStorage.setItem("darkMode", !darkMode ? "enabled" : "disabled");
-
             setLogoImage(!darkMode);
         }
+
         function setLogoImage(isDarkMode) {
             const logoImg = document.getElementById("logo-image");
-            console.log(logoImg);
             logoImg.src = isDarkMode
-                ? "https://drive.google.com/uc?id=1DBXfLGIhCX7mTP782TS0u6OgAgx5jLYY" // dark mode logo URL
-                : "https://drive.google.com/uc?id=1BKk00uxKPeyxjYbvwz9OK2LaaAAvPRes"; // regular logo URL
+                ? "https://drive.google.com/uc?id=1DBXfLGIhCX7mTP782TS0u6OgAgx5jLYY"
+                : "https://drive.google.com/uc?id=1BKk00uxKPeyxjYbvwz9OK2LaaAAvPRes";
         }
+
         window.onload = function() {
-            // Check if dark mode preference is stored in localStorage
             const darkMode = localStorage.getItem("darkMode") === "enabled";
-
-            // Toggle dark mode based on preference
             document.body.classList.toggle("dark-mode", darkMode);
-
             setLogoImage(darkMode);
         }
     </script>
 </head>
+
 <body>
     <div class="sidebar">
-        <a href="#"><i class="fas fa-pen"></i>Create A Query</a>
-        <a href="#"><i class="fas fa-eye"></i>Query Status</a>
-        <a href="#"><i class="fas fa-table"></i>Time Table</a>
-        <a href="#"><i class="fas fa-book"></i>FAQs</a>
+        <a href="createquery.html"><i class="fas fa-pen"></i>Create A Query</a>
+        <a href="querystatus.html"><i class="fas fa-eye"></i>Query Status</a>
+        <a href="timetable.html"><i class="fas fa-table"></i>Time Table</a>
+        <a href="faqs.html"><i class="fas fa-book"></i>FAQs</a>
     </div>
     <div class="content-container">
         <div class="header">
@@ -249,29 +240,29 @@
                 <span id="typed-output"></span>
             </h1>
             <h1 class="sub-heading"> <span class="animated-word">Digitalized</span> OneStop</h1>
-            <form method="post" action="{% url 'logout' %}">
-                {% csrf_token %}
+            <form method="post" action="login_student.html">
                 <button class="logout-btn" type="submit">Log Out</button>
             </form>
         </div>
         <div class="content">
             <h2>Student Dashboard</h2>
-            <p>{{username}}'s Information:</p>
+            <p>Aheed's Information:</p>
             <ul>
-                {% if name %}<li>Name: {{ name }}</li>{% endif %}
-                <li>Email: {{ email }}</li>
-                {% if program %}<li>Your program: {{ program }}</li>{% endif %}
-                {% if semester %}<li>Your semester: {{ semester }}</li>{% endif %}
-                {% if cgpa %}<li>Your CGPA: {{ cgpa }}</li>{% endif %}
-                {% if first_name %}<li>Your first name: {{ first_name }}</li>{% endif %}
-                {% if last_name %}<li>Your last name: {{ last_name }}</li>{% endif %}
-                {% if batch %}<li>Your batch: {{ batch }}</li>{% endif %}
-                {% if student_id %}<li>Your student ID: {{ student_id }}</li>{% endif %}
-                {% if city %}<li>Your City: {{ city }}</li>{% endif %}
+                <li>Name: Aheed Tahir</li>
+                <li>Email: k214517@nu.edu.pk</li>
+                <li>Your program: Computer Science</li>
+                <li>Your semester: 5</li>
+                <li>Your CGPA: 3.5</li>
+                <li>Your first name: Aheed</li>
+                <li>Your last name: Tahir</li>
+                <li>Your batch: 2021</li>
+                <li>Your student ID: 21k-4517</li>
+                <li>Your City: Karachi</li>
             </ul>
         </div>
     </div>
-    <div style="position: fixed; bottom: 20px; right: 20px; cursor: pointer; font-size: 18px;" onclick="toggleDarkMode()">🌙</div>
-
+    <div style="position: fixed; bottom: 20px; right: 20px; cursor: pointer; font-size: 18px;"
+        onclick="toggleDarkMode()">🌙</div>
 </body>
+
 </html>
