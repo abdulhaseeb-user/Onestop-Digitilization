@@ -3,13 +3,257 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Registration</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px; /* Added margin for space on the top and bottom */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: left;
+            color: #007bff;
+            margin-bottom: 20px;
+            margin-left: 20px;
+        }
+
+        img {
+            max-width: 150px;
+            margin-bottom: 10px;
+            display: block;
+            margin-left: 35px;
+        }
+
+        h1, p {
+            font-size: 10px;
+            margin-bottom: 5px;
+            margin-left: 20px;
+        }
+
+        h3 {
+            font-size: 32px;
+            margin-bottom: 5px;
+            margin-left: 20px;
+        }
+
+        .sub-heading {
+            font-size: 18px;
+            color: #555;
+            margin-left: 10px;
+        }
+
+        .animated-word {
+            font-size: 14px;
+            display: inline-block;
+            animation: bounce 2s infinite;
+            background-image: linear-gradient(to right, #007bff, #0056b3);
+            color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 10px;
+            margin-bottom: 10px;
+            width: 300px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            color: #555;
+            font-size: 12px; /* Adjusted font size */
+        }
+
+        input {
+            width: calc(100% - 22px);
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            color: #333;
+            transition: box-shadow 0.3s;
+            font-size: 12px; /* Adjusted font size */
+        }
+
+        input::placeholder {
+            color: #ccc;
+        }
+
+        input:focus::placeholder {
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .login-link {
+            font-size: 12px;
+            text-align: center;
+            margin-top: 10px;
+            color: #007bff;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-5px);
+            }
+            60% {
+                transform: translateY(-3px);
+            }
+        }
+
+        li {
+            font-size: 10px;
+            display: list-item;
+            text-align: -webkit-match-parent;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var emailInput = document.getElementById("id_email");
+            var additionalFields = document.getElementById("additional-fields");
+            var adminFields = document.getElementById("admin-fields");
+
+            emailInput.addEventListener("input", function() {
+                showAdditionalFields(this.value);
+                showAdminFields(this.value);
+            });
+
+            function setAdditionalFieldValues(email) {
+                // Extract information from the email
+                var city = getCityFromEmail(email);
+                var batch = getBatchFromEmail(email);
+                var studentId = getStudentIdFromEmail(email);
+
+                // Set values in the additional fields
+                document.getElementById("city").value = city;
+                document.getElementById("batch").value = batch;
+                document.getElementById("student_id").value = studentId;
+            }
+
+            function getCityFromEmail(email) {
+                // Extract the country from the first character of the email
+                var cityMapping = {'k': 'Karachi', 'l': 'Lahore', 'i': 'Islamabad', 'p': 'Peshawar', 'c': 'Chiniot-Faisalabad'};
+                return cityMapping[email[0].toLowerCase()] || 'Unknown';
+            }
+
+            function getBatchFromEmail(email) {
+                // Extract the batch from the second and third characters of the email and add "20" before them
+                return `20${email[1]}${email[2]}`;
+            }
+            
+
+            function getStudentIdFromEmail(email) {
+                // Extract the student ID from the email
+                var batch = getBatchFromEmail(email);
+                var lastTwoCharsOfBatch = batch.slice(-2);  // Get the last two characters of the batch
+                var studentId = `${lastTwoCharsOfBatch}${email.slice(0, 1)}-${email.slice(3, 7)}`;
+                return studentId;
+            }
+            
+            
+
+            function showAdditionalFields(email) {
+                var isStudentEmail = isStudentEmailFunction(email);
+                additionalFields.style.display = isStudentEmail ? "block" : "none";
+                if (isStudentEmail) {
+                    // Extract information from the email and set values in the additional fields
+                    setAdditionalFieldValues(email);
+                }
+            }
+            function showAdminFields(email) {
+                var isAdminEmail = isAdminEmailFunction(email);
+                adminFields.style.display = isAdminEmail ? "block" : "none";
+                if (isAdminEmail) {
+                    setAdminFieldValues(email);
+                }
+            }
+
+            function isStudentEmailFunction(email) {
+                var regex = /^[klipc]\d{6}@nu\.edu\.pk$/i;
+                return regex.test(email);
+            }
+            function isAdminEmailFunction(email) {
+                // Check if the email ends with "@nu.edu.pk"
+                // and doesn't follow the student email pattern
+                var regex = /^[^\d]{2,}.*@nu\.edu\.pk$/i;
+                return regex.test(email) && !isStudentEmailFunction(email);
+            }
+        });
+    </script>
 </head>
 <body>
-    <form action = "" method = 'POST'>
+    <header>
+        <img src="https://drive.google.com/uc?id=1BKk00uxKPeyxjYbvwz9OK2LaaAAvPRes" alt="OneStop Logo">
+        <h3>Welcome To</h3>
+        <h2 class="sub-heading">Students OneStop <span class="animated-word">Digitalized</span></h2>
+    </header>
+    <form action="" method="POST">
         {% csrf_token %}
-        {{form.as_p}}
-        <button>Register</button>
+        <h2>Register</h2>
+        {{ form.as_p|safe }}
+        <div id="additional-fields" style="display: none;">
+            <!-- Additional fields for student email -->
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" placeholder="Enter your first name">
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" placeholder="Enter your last name">
+            <label for="semester">Semester:</label>
+            <input type="text" id="semester" name="semester" placeholder="Enter your semester">
+            <label for="cgpa">CGPA:</label>
+            <input type="text" id="cgpa" name="cgpa" placeholder="Enter your CGPA">
+            <label for="Program">Program:</label>
+            <input type="text" id="Program" name="Program" placeholder="CS/Ai/CYS/etc">
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" readonly>
+            <label for="batch">Batch Year:</label>
+            <input type="text" id="batch" name="batch" readonly>
+            <label for="student_id">Student ID:</label>
+            <input type="text" id="student_id" name="student_id" readonly>
+        
+        </div>
+        <div id="admin-fields" style="display: none;">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your Full Name">
+            <label for="manager_id">Manager ID:</label>
+            <input type="text" id="manager_id" name="manager_id" placeholder="Your Fast Issued ID">
+        </div>    
+        <button type="submit">Register</button>
+        <p class="login-link" onclick="window.location.href='/login'">Already Registered? Login!</p>
     </form>
 </body>
 </html>
